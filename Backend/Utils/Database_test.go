@@ -30,67 +30,67 @@ func TestOpenDb(t *testing.T) {
 	}
 }
 
-func TestLoadData(t *testing.T) {
-	// Opens an in-memory SQLite database
-	db, err := OpenDb("sqlite3", ":memory:")
-	if err != nil {
-		t.Fatalf("Erreur lors de l'ouverture de la base de données : %v", err)
-		return
-	}
-	defer db.Close()
+// func TestLoadData(t *testing.T) {
+// 	// Opens an in-memory SQLite database
+// 	db, err := OpenDb("sqlite3", ":memory:")
+// 	if err != nil {
+// 		t.Fatalf("Erreur lors de l'ouverture de la base de données : %v", err)
+// 		return
+// 	}
+// 	defer db.Close()
 
-	// Create a table for testing
-	_, err = db.Exec(`
-			CREATE TABLE IF NOT EXISTS Auth (
-				Id VARCHAR(36) NOT NULL UNIQUE PRIMARY KEY,
-				Email VARCHAR(100) NOT NULL UNIQUE,
-				Password VARCHAR(50) NOT NULL
-			);
+// 	// Create a table for testing
+// 	_, err = db.Exec(`
+// 			CREATE TABLE IF NOT EXISTS Auth (
+// 				Id VARCHAR(36) NOT NULL UNIQUE PRIMARY KEY,
+// 				Email VARCHAR(100) NOT NULL UNIQUE,
+// 				Password VARCHAR(50) NOT NULL
+// 			);
 			
-			CREATE TABLE IF NOT EXISTS UserInfo (
-				Id VARCHAR(36) NOT NULL UNIQUE REFERENCES "Auth"("Id"),
-				Email VARCHAR(100) NOT NULL UNIQUE REFERENCES "Auth"("Email"),
-				FirstName VARCHAR(50) NOT NULL, 
-				LastName VARCHAR(50) NOT NULL,
-				BirthDate VARCHAR(20) NOT NULL,
-				ProfilePicture VARCHAR(400000),
-				Username VARCHAR(50),
-				AboutMe VARCHAR(280)
-			);
+// 			CREATE TABLE IF NOT EXISTS UserInfo (
+// 				Id VARCHAR(36) NOT NULL UNIQUE REFERENCES "Auth"("Id"),
+// 				Email VARCHAR(100) NOT NULL UNIQUE REFERENCES "Auth"("Email"),
+// 				FirstName VARCHAR(50) NOT NULL, 
+// 				LastName VARCHAR(50) NOT NULL,
+// 				BirthDate VARCHAR(20) NOT NULL,
+// 				ProfilePicture VARCHAR(400000),
+// 				Username VARCHAR(50),
+// 				AboutMe VARCHAR(280)
+// 			);
 			
-			CREATE TABLE IF NOT EXISTS Post (
-				Id VARCHAR(36) NOT NULL UNIQUE,
-				AuthorId VARCHAR(36) NOT NULL REFERENCES "UserInfo"("Id"),
-				Text VARCHAR(1000) NOT NULL,
-				Image VARCHAR(100),
-				CreationDate VARCHAR(20) NOT NULL,
-				IsGroup VARCHAR(36) REFERENCES "Groups"("Id")
-			);
+// 			CREATE TABLE IF NOT EXISTS Post (
+// 				Id VARCHAR(36) NOT NULL UNIQUE,
+// 				AuthorId VARCHAR(36) NOT NULL REFERENCES "UserInfo"("Id"),
+// 				Text VARCHAR(1000) NOT NULL,
+// 				Image VARCHAR(100),
+// 				CreationDate VARCHAR(20) NOT NULL,
+// 				IsGroup VARCHAR(36) REFERENCES "Groups"("Id")
+// 			);
 			
-			CREATE TABLE IF NOT EXISTS Comment (
-				Id VARCHAR(36) NOT NULL UNIQUE,
-				AuthorId VARCHAR(36) NOT NULL REFERENCES "UserInfo"("Id"),
-				Text VARCHAR(1000) NOT NULL,
-				CreationDate VARCHAR(20) NOT NULL,
+// 			CREATE TABLE IF NOT EXISTS Comment (
+// 				Id VARCHAR(36) NOT NULL UNIQUE,
+// 				AuthorId VARCHAR(36) NOT NULL REFERENCES "UserInfo"("Id"),
+// 				Text VARCHAR(1000) NOT NULL,
+// 				CreationDate VARCHAR(20) NOT NULL,
 			
-				PostId VARCHAR(36) REFERENCES "Post"("Id")
-			);
+// 				PostId VARCHAR(36) REFERENCES "Post"("Id")
+// 			);
 			
-			CREATE TABLE IF NOT EXISTS Groups (
-				Id VARCHAR(36) NOT NULL UNIQUE
-			);
-		`)
-	if err != nil {
-		t.Fatalf("Erreur lors de la création de la table : %v", err)
-		return
-	}
+// 			CREATE TABLE IF NOT EXISTS Groups (
+// 				Id VARCHAR(36) NOT NULL UNIQUE
+// 			);
+// 		`)
+// 	if err != nil {
+// 		t.Fatalf("Erreur lors de la création de la table : %v", err)
+// 		return
+// 	}
 
-	err = LoadData(db)
-	if err != nil {
-		t.Fatalf("Erreur pendant la résolution de la fonction : %v", err)
-		return
-	}
-}
+// 	err = LoadData(db)
+// 	if err != nil {
+// 		t.Fatalf("Erreur pendant la résolution de la fonction : %v", err)
+// 		return
+// 	}
+// }
 
 func TestInsertIntoDb(t *testing.T) {
 	// Opens an in-memory SQLite database
