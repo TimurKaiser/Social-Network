@@ -1,0 +1,21 @@
+  version: '3'
+  services:
+    backend:
+      image: minwolf999/social-network:latest
+      container_name: backend
+      ports:
+        - "8080:8080"
+      networks:   
+        - my_network
+
+    frontend:
+      image: frontenvcompose
+      container_name: frontend
+      ports:
+        - "5173:5173"
+      networks:
+        - my_network
+
+  networks:
+    my_network:
+      driver: bridge
